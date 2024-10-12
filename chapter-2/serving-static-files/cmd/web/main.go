@@ -12,6 +12,7 @@ func main() {
 
 	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
 
+	mux.HandleFunc("GET /download-zip", downloadFile)
 	mux.HandleFunc("GET /{$}", home)
 	mux.HandleFunc("GET /snippet/view/{id}", snippetView)
 	mux.HandleFunc("GET /snippet/create", snippetCreate)
