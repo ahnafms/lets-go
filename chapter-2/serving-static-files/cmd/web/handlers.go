@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"path/filepath"
 	"strconv"
 )
 
@@ -52,5 +53,24 @@ func snippetCreatePost(w http.ResponseWriter, r *http.Request) {
 }
 
 func downloadFile(w http.ResponseWriter, r *http.Request) {
+	saveUrl := filepath.Clean(r.URL.Path)
+
+	log.Print(saveUrl)
+	r.URL.Path = saveUrl
+
 	http.ServeFile(w, r, "./ui/static/img/logo.png")
+}
+
+func downloadFileFromUserInput(w http.ResponseWriter, r *http.Request) {
+	path := r.PathValue("path")
+	sanitizedPath := filepath.Clean(path)
+
+	basePath := "./ui/static/img/"
+
+	fullPath := basePath + sanitizedPath
+
+	log.Print(filepath.Clean(fullPath))
+
+	log.Print(fullPath)
+	http.ServeFile(w, r, fullPath)
 }
