@@ -2,7 +2,6 @@ package api
 
 import (
 	"html/template"
-	"log"
 	"net/http"
 
 	"github.com/ahnafms/learn-go/cmd/internal/config"
@@ -24,7 +23,7 @@ func Home(app *config.Application) http.HandlerFunc {
 
 		ts, err := template.ParseFiles(files...)
 		if err != nil {
-			log.Print(err.Error())
+			app.Logger.Error(err.Error(), "method", r.Method, "uri", r.URL.RequestURI())
 			http.Error(w, "Internal server Error", http.StatusInternalServerError)
 			return
 		}
@@ -32,7 +31,7 @@ func Home(app *config.Application) http.HandlerFunc {
 		err = ts.ExecuteTemplate(w, "base", nil)
 
 		if err != nil {
-			log.Print(err.Error())
+			app.Logger.Error(err.Error(), "method", r.Method, "uri", r.URL.RequestURI())
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		}
 	}
