@@ -2,17 +2,23 @@
 
 {{define "main"}}
     <div class='snippet'>
-      {{with .Snippet}}
-        <div class='metadata'>
-            <strong>{{.Title}}</strong>
-            <span>#{{.ID}}</span>
-        </div>
-        <pre><code>{{.Content}}</code></pre>
-        <div class='metadata'>
-            <time>Created: {{.Created}}</time>
-            <time>Created With Method: {{.Created.Weekday}}</time>
-            <time>Expires: {{.Expires}}</time>
-        </div>
+      {{if .Snippets}}
+        <table>
+        <tr>
+        <th>Title</th>
+        <th>Created</th>
+        <th>ID</th>
+        </tr>
+        {{range .Snippets}}
+        <tr>
+        <td><a href='/snippet/view/{{.ID}}'/>{{.Title}}</td>
+        <td>{{.Created}}</td>
+        <td>#{{.ID}}</td>
+        </tr>
+        {{end}}
+        </table>
+        {{else}}
+          <p>There's nothing to see here...</p>
         {{end}}
     </div>
 {{end}}
