@@ -10,6 +10,9 @@
         <th>ID</th>
         </tr>
         {{range .Snippets}}
+        {{if eq .ID "10"}}
+        {{continue}}
+        {{end}}
         <tr>
         <td><a href='/snippet/view/{{.ID}}'/>{{.Title}}</td>
         <td>{{.Created}}</td>
